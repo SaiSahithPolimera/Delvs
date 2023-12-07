@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private  PhoneAuthProvider.OnVerificationStateChangedCallbacks
-    mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
         @Override
         public void onVerificationCompleted(@NonNull PhoneAuthCredential credential) {
@@ -90,12 +90,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
-           Toast.makeText(MainActivity.this, "Verification Failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Verification Failed", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCodeSent(@NonNull String s,
-                @NonNull PhoneAuthProvider.ForceResendingToken token) {
+                               @NonNull PhoneAuthProvider.ForceResendingToken token) {
             super.onCodeSent(s, token);
             verificationID = s;
         }
