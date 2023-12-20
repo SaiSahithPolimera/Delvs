@@ -2,7 +2,8 @@ package com.example.delvs;
 
 public class Users {
 
-    String firstName, lastName, age, userName;
+    private String firstName, lastName, age, userName;
+    private double latitude, longitude;
 
     public Users() {
     }
@@ -12,8 +13,29 @@ public class Users {
         this.lastName = lastName;
         this.age = age;
         this.userName = userName;
+
     }
 
+    public Users(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
     public String getFirstName() {
         return firstName;
     }
