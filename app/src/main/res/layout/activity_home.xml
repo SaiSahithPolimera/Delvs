@@ -17,17 +17,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome"
-        android:textSize="40sp"
-        android:fontFamily="@font/poppins_medium"
-        android:layout_marginTop="-20dp"/>
+        android:layout_marginTop="-20dp"
+        android:backgroundTint="#1B1313"
 
-     <TextView
+        android:fontFamily="@font/poppins_medium"
+        android:text="Welcome"
+        android:textColor="#120E0E"
+        android:textSize="40sp" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+
         android:text="SignUp to connect with people near you!"
-        android:textSize="18sp"
-        />
+        android:textColor="#151111"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,37 +46,44 @@
             android:hint="First Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:inputType="text">
 
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="#191010" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/lastName"
             android:hint="Last Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:inputType="text">
 
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="#120C0C" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/age"
             android:hint="Age"
             android:layout_width="match_parent"
+            android:fontFamily="@font/poppins_medium"
             android:layout_height="wrap_content"
-            >
+            android:inputType="text">
 
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/poppins_medium"
+
                 android:layout_height="wrap_content"
                 />
         </com.google.android.material.textfield.TextInputLayout>
@@ -81,17 +93,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:counterEnabled="true"
-            app:counterMaxLength="30">
+            app:counterMaxLength="30"
+            android:inputType="text">
 
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="#1B1212" />
         </com.google.android.material.textfield.TextInputLayout>
-
-
-
 
     </LinearLayout>
 
@@ -100,6 +111,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Go"
+        android:fontFamily="@font/poppins_medium"
         android:background="@drawable/button_design"
         android:textColor="@color/white" />
 
