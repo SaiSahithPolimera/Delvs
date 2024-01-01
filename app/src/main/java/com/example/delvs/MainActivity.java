@@ -2,6 +2,7 @@ package com.example.delvs;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,10 +26,10 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
-
     private String verificationID;
     private EditText phone, otp;
-    private Button btngenOTP, btnverify, btnResend, goAnyWay;
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String MOBILE_NUMBER_KEY = "mobileNumber";
 
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
@@ -42,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
         phone = findViewById(R.id.phone);
         otp = findViewById(R.id.otp);
-        btngenOTP = findViewById(R.id.btngenerateOTP);
-        btnverify = findViewById(R.id.btnverifyOTP);
-        btnResend = findViewById(R.id.btnResendOTP);
-        goAnyWay = findViewById(R.id.GoAnyWay);
+        Button btngenOTP = findViewById(R.id.btngenerateOTP);
+        Button btnverify = findViewById(R.id.btnverifyOTP);
+        Button btnResend = findViewById(R.id.btnResendOTP);
+        Button goAnyWay = findViewById(R.id.GoAnyWay);
 
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
@@ -55,9 +56,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(phone.getText().toString())) {
+                    String number = phone.getText().toString();
+                    saveMobileNumberToPrefs(number);
                     Toast.makeText(MainActivity.this, "Enter Valid Phone No.", Toast.LENGTH_SHORT).show();
                 } else {
                     String number = phone.getText().toString();
+                    saveMobileNumberToPrefs(number);
                     sendVerificationCode(number);
                 }
             }
@@ -66,10 +70,13 @@ public class MainActivity extends AppCompatActivity {
         goAnyWay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Moved to next activity!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Moved to the next activity!", Toast.LENGTH_SHORT).show();
+                String number = phone.getText().toString();
+                saveMobileNumberToPrefs(number);
+                // Remove the following line since you've already sent the verification code
+                // sendVerificationCode(number);
                 startActivity(new Intent(MainActivity.this, HomeActivity.class));
                 finish();
-
             }
         });
 
@@ -118,6 +125,13 @@ public class MainActivity extends AppCompatActivity {
                 verificationID = s;
             }
         };
+    }
+
+    private void saveMobileNumberToPrefs(String MobileNumber) {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(MOBILE_NUMBER_KEY, MobileNumber);
+        editor.apply();
     }
 
     private void sendVerificationCode(String number) {

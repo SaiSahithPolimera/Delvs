@@ -1,8 +1,11 @@
 package com.example.delvs;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -19,26 +22,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 public class GetLocation extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
     private Location currentLocation;
     private boolean isPermissionGranted;
-    private double latitude, longitude;
     private FusedLocationProviderClient fusedLocationProviderClient;
-
-    // Firebase database reference
-
-    // Threads
-
-    private UpdateLocation updateLocationThread;
-    private DetectUsers detectUsersThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +39,14 @@ public class GetLocation extends AppCompatActivity implements OnMapReadyCallback
         setContentView(getLocationBinding.getRoot());
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        checkPermission();
-
         Button getLocationButton = getLocationBinding.getLocation;
-        getLocationButton.setOnClickListener(view -> {
-            // Check if the currentLocation is available
-            getLastLocation();
+        getLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkPermission();
+            }
         });
 
-        // Initialize threads
-        updateLocationThread = new UpdateLocation();
-        detectUsersThread = new DetectUsers(this, latitude, longitude);
     }
 
     private void checkPermission() {
@@ -75,9 +64,7 @@ public class GetLocation extends AppCompatActivity implements OnMapReadyCallback
             checkPermission();
             return;
         }
-
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
-
         task.addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
@@ -85,9 +72,7 @@ public class GetLocation extends AppCompatActivity implements OnMapReadyCallback
                     currentLocation = location;
                     Toast.makeText(GetLocation.this, "Your location Latitude: " + location.getLatitude() +
                             "\nYour location Longitude: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
-
-                    // Start the threads after obtaining the location
-                    startThreads();
+                    updateLocationInDatabase(location.getLatitude(), location.getLongitude());
                 } else {
                     Toast.makeText(GetLocation.this, "Could not find location", Toast.LENGTH_SHORT).show();
                 }
@@ -95,42 +80,37 @@ public class GetLocation extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
+    private void updateLocationInDatabase(double latitude, double longitude) {
+        // Obtain the currently signed-in Firebase user
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        String userId = getUsernameFromPrefs();
 
-    private void startThreads() {
-        // Start the threads only if they are not already running
-        if (!updateLocationThread.isAlive()) {
-            updateLocationThread.start();
-        }
+        // Set the location values
+        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+        userReference.child("latitude").setValue(latitude);
+        userReference.child("longitude").setValue(longitude);
 
-        if (!detectUsersThread.isAlive()) {
-            detectUsersThread.start();
-        }
+        // Start the DisplayUsers activity
+        Intent intent = new Intent(GetLocation.this, DisplayUsers.class);
+        intent.putExtra("latitude", latitude);
+        intent.putExtra("longitude", longitude);
+        startActivity(intent);
     }
 
-    @Override
+    // Retrieve username from shared preferences
+    private String getUsernameFromPrefs() {
+        SharedPreferences settings = getSharedPreferences("MyPrefsFile", 0);
+        return settings.getString("username", "");
+    }
+
+
     public void onMapClick(@NonNull LatLng latLng) {
-
+        // Handle map click
     }
 
-    @Override
+
     public void onMapReady(@NonNull GoogleMap googleMap) {
-
-    }
-
-    private class UpdateLocation extends Thread {
-        public void run() {
-            latitude = currentLocation.getLatitude();
-            longitude = currentLocation.getLongitude();
-            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-            String studentUser = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(studentUser);
-            Map<String, Object> updates = new HashMap<>();
-            updates.put("latitude", latitude);
-            updates.put("longitude", longitude);
-            databaseReference.updateChildren(updates);
-            Toast.makeText(GetLocation.this, "Location details are being updated", Toast.LENGTH_SHORT).show();
-        }
+        // Handle map ready
     }
 }
-

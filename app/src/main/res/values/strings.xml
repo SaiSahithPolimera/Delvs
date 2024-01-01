@@ -119,4 +119,7 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="set_up_location">SET UP LOCATION</string>
+    <string name="back">Back</string>
+    <string name="search_contacts">Search contacts</string>
+    <string name="title_activity_display_users">DisplayUsers</string>
 </resources>

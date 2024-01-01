@@ -52,7 +52,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                    android:inputType="text"
                 android:fontFamily="@font/poppins_medium"
                 android:textColor="#191010" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -67,6 +67,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text"
 
                 android:fontFamily="@font/poppins_medium"
                 android:textColor="#120C0C" />
@@ -83,7 +84,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:fontFamily="@font/poppins_medium"
-
+                android:inputType="text"
                 android:layout_height="wrap_content"
                 />
         </com.google.android.material.textfield.TextInputLayout>
@@ -100,6 +101,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text"
                 android:fontFamily="@font/poppins_medium"
                 android:textColor="#1B1212" />
         </com.google.android.material.textfield.TextInputLayout>

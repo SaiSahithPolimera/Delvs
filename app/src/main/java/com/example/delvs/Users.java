@@ -2,25 +2,25 @@ package com.example.delvs;
 
 public class Users {
 
-    private String firstName, lastName, age, userName;
-    private double latitude, longitude;
+    public String firstName, lastName, age, userName, mobileNumber;
+    public double latitude, longitude;
 
-    public Users() {
-    }
-
-    public Users(String firstName, String lastName, String age, String userName) {
+    // Constructor for user details
+    public Users(String firstName, String lastName, String age, String userName, String mobileNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.userName = userName;
-
+        this.mobileNumber = mobileNumber;
     }
 
+    // Constructor for location details
     public Users(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
+    // Getters and setters for latitude and longitude
     public double getLatitude() {
         return latitude;
     }
@@ -36,6 +36,8 @@ public class Users {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
+    // Getters and setters for user details
     public String getFirstName() {
         return firstName;
     }
@@ -66,5 +68,13 @@ public class Users {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 }

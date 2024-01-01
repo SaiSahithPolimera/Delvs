@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=""
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/back"
+            android:src="@drawable/arrow_back_icon" />
+
+        <TextView
+            android:id="@+id/useLocation"
+            android:layout_width="298dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="3dp"
+            android:layout_toEndOf="@id/backButton"
+            android:background="#DACFCF"
+            android:gravity="left|center_vertical"
+            android:text="@string/search_contacts"
+            android:textColor="#455A64"
+            tools:ignore="RtlHardcoded" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="ProfileImage"
+            android:src="@drawable/searchaccounticon" />
+
+        <TextView
+            android:id="@+id/userinfo1"
+            android:layout_width="279dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="-50dp"
+            android:background="#F4EDED"
+            android:gravity="left|center_vertical"
+            android:text="Profile"
+            android:textColor="#546E7A"
+            tools:ignore="RtlHardcoded" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/circlecallbutton"
+        android:backgroundTint="@color/black"
+        android:contentDescription="phoneCallButton"
+        app:srcCompat="@android:drawable/stat_sys_phone_call" />
+
+</LinearLayout>
