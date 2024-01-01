@@ -1,38 +1,39 @@
 package com.example.delvs;
 
+import android.Manifest;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.delvs.databinding.ActivityDisplayUsersBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import com.google.firebase.database.ValueEventListener;
-
 public class DisplayUsers extends AppCompatActivity {
+    static int PERMISSION_CODE = 100;
+    String mobile_Number;
 
     public class User {
         private String userName;
         private double latitude;
         private double longitude;
-        private String mobileNumber;
+        public String mobileNumber;
 
         // Constructor
         public User(String userName, double latitude, double longitude, String mobileNumber) {
@@ -80,6 +81,7 @@ public class DisplayUsers extends AppCompatActivity {
     ActivityDisplayUsersBinding binding;
     ArrayList<User> userList = new ArrayList<>();
     DatabaseReference reference;
+    TextView MobileNumber;
     Location currentUserLocation;
 
     @Override
@@ -87,6 +89,7 @@ public class DisplayUsers extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityDisplayUsersBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        readData();
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,32 +113,41 @@ public class DisplayUsers extends AppCompatActivity {
             }
         });
 
-        binding.phoneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(DisplayUsers.this, "Entered Onclick", Toast.LENGTH_SHORT).show();
-                readData();
-            }
-        });
 
         // Set the current user's location (you need to set this with the actual location)
         currentUserLocation = new Location("currentUser");
         currentUserLocation.setLatitude(currentUserLocation.getLatitude());
         currentUserLocation.setLongitude(currentUserLocation.getLongitude());
+
+        if (ContextCompat.checkSelfPermission(DisplayUsers.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(DisplayUsers.this, new String[]{Manifest.permission.CALL_PHONE}, PERMISSION_CODE);
+        }
+
+        binding.phoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_CALL);
+                i.setData(Uri.parse("tel:" + mobile_Number));
+                startActivity(i);
+            }
+        });
     }
 
     public void readData() {
         reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.addValueEventListener(new ValueEventListener() {
-            @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                Toast.makeText(DisplayUsers.this, "Entered datasnapshot", Toast.LENGTH_SHORT).show();
+                String user_Name = getUsernameFromPrefs();
                 userList.clear(); // Clear the list before adding new data
                 for (DataSnapshot snapshot : datasnapshot.getChildren()) {
                     String userName = snapshot.child("userName").getValue().toString();
+                    if (userName.equals(user_Name)) {
+                        continue;
+                    }
                     double latitude = Double.parseDouble(snapshot.child("latitude").getValue().toString());
                     double longitude = Double.parseDouble(snapshot.child("longitude").getValue().toString());
                     String mobileNumber = snapshot.child("mobileNumber").getValue().toString();
+
                     User user = new User(userName, latitude, longitude, mobileNumber);
                     userList.add(user);
                 }
@@ -149,14 +161,16 @@ public class DisplayUsers extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle onCancelled event
             }
+            private String getUsernameFromPrefs() {
+                SharedPreferences settings = getSharedPreferences("MyPrefsFile", 0);
+                return settings.getString("username", "");
+            }
         });
     }
 
     // Inside findNearbyUsers method
     private void findNearbyUsers() {
-        NestedScrollView scrollView = findViewById(R.id.scrollView);
-        LinearLayout userInfoBlock = findViewById(R.id.UserInfoBlock);
-        userInfoBlock.removeAllViews(); // Clear existing views before adding new ones
+        boolean foundNearbyUser = false;
 
         for (User user : userList) {
             float[] distance = new float[1];
@@ -166,53 +180,30 @@ public class DisplayUsers extends AppCompatActivity {
                     distance
             );
 
-            double distanceInKm = distance[0] / 1000;
+            double distanceInKm = distance[0] / 10000000;
+            Toast.makeText(DisplayUsers.this, "Distance: " + distanceInKm, Toast.LENGTH_SHORT).show();
 
             if (distanceInKm <= 3.0) {
                 // User is within the specified distance
-                // Create a LinearLayout for each user
-                LinearLayout userLayout = new LinearLayout(this);
-                userLayout.setOrientation(LinearLayout.HORIZONTAL);
-                userLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                ));
-
-                // Create an ImageView for the profile picture
-                ImageView imageView = new ImageView(this);
-                imageView.setLayoutParams(new LinearLayout.LayoutParams(
-                        50, // Width
-                        50 // Height
-                ));
-                imageView.setImageResource(R.drawable.searchaccounticon);
-                userLayout.addView(imageView);
-
-                // Create a TextView for the mobile number
-                TextView textView = new TextView(this);
-                textView.setLayoutParams(new LinearLayout.LayoutParams(
-                        0, // Width
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        1 // Weight
-                ));
-                textView.setText(user.getMobileNumber());
-                textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
-                textView.setBackgroundColor(Color.parseColor("#F4EDED"));
-                textView.setTextColor(Color.parseColor("#546E7A"));
-                userLayout.addView(textView);
-
-                // Create an ImageButton for the phone call
-                ImageButton phoneButton = new ImageButton(this);
-                phoneButton.setLayoutParams(new LinearLayout.LayoutParams(
-                        50, // Width
-                        50 // Height
-                ));
-                phoneButton.setImageResource(R.drawable.circlecallbutton);
-                phoneButton.setBackgroundColor(Color.BLACK);
-                userLayout.addView(phoneButton);
-
-                // Add the user's layout to the parent layout
-                userInfoBlock.addView(userLayout);
+                // Show a toast for the nearby user
+                String toastMessage = "Nearby User: " + user.getUserName() + ", Mobile Number: " + user.getMobileNumber();
+                mobile_Number = user.getMobileNumber();
+                binding.MobileNumber.setText(user.getMobileNumber());
+                // Set the flag to true to indicate that a nearby user was found
+                foundNearbyUser = true;
+                break; // Break the loop since we only want to show a toast for one nearby user
             }
         }
+
+        // If no nearby user was found, you can display a different toast or handle it as needed
+        if (!foundNearbyUser) {
+            Toast.makeText(this, "No nearby users found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Convert dp to pixels
+    private int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * density);
     }
 }

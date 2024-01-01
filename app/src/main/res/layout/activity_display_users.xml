@@ -6,11 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".DisplayUsers"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -23,57 +22,62 @@
             android:contentDescription="@string/back"
             android:src="@drawable/arrow_back_icon" />
 
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/UserInfoBlock"
-        android:orientation="horizontal"
-        android:padding="16dp">
-
-        <ImageView
-            android:id="@+id/imageProfile"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="-1dp"
-            android:contentDescription="ProfileImage"
-            android:src="@drawable/searchaccounticon" />
-
-        <TextView
-            android:id="@+id/MobileNumber"
-            android:layout_width="230dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="11dp"
-            android:background="#F4EDED"
-            android:fontFamily="@font/poppins_medium"
-            android:gravity="left|center_vertical"
-            android:text="Profile"
-            android:textColor="#546E7A"
-            tools:ignore="RtlHardcoded" />
-
-        <ImageButton
-            android:id="@+id/phoneButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="end"
-            android:layout_marginLeft="30dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/circlecallbutton"
-            android:backgroundTint="@color/black"
-            android:contentDescription="phoneCallButton"
-            app:srcCompat="@android:drawable/stat_sys_phone_call" />
-
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FFFFFF"
         android:contentDescription="@string/app_name">
 
-        <!-- Add your scrollable content here -->
+        <LinearLayout
+            android:id="@+id/UserInfoBlock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
+            <!-- Add your scrollable content here -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/imageProfile"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="4dp"
+                    android:contentDescription="ProfileImage"
+                    android:src="@drawable/searchaccounticon" />
+
+                <TextView
+                    android:id="@+id/MobileNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:background="#F4F4F4"
+                    android:fontFamily="@font/poppins_medium"
+                    android:gravity="left|center_vertical"
+                    android:text="Profile"
+                    android:textColor="#546E7A"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageButton
+                    android:id="@+id/phoneButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/black"
+                    android:contentDescription="phoneCallButton"
+                    app:srcCompat="@android:drawable/stat_sys_phone_call" />
+
+            </LinearLayout>
+
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 </LinearLayout>

@@ -47,6 +47,28 @@ public class GetLocation extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
+        getLocationBinding.backButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the click on the BackButton
+                navigateToPreviousActivity();
+            }
+
+            private void navigateToPreviousActivity() {
+                // Create an Intent to navigate to the GetLocation activity
+                Intent intent = new Intent(GetLocation.this, LocationAccess.class);
+
+                // You can add any additional data to the intent if needed
+                // intent.putExtra("key", "value");
+
+                // Start the activity
+                startActivity(intent);
+
+                // Finish the current activity
+                finish();
+            }
+        });
+
     }
 
     private void checkPermission() {
