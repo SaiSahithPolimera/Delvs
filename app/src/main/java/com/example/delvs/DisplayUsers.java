@@ -132,10 +132,14 @@ public class DisplayUsers extends AppCompatActivity {
             }
         });
     }
-
+    private String getUsernameFromPrefs() {
+        SharedPreferences settings = getSharedPreferences("MyPrefsFile", 0);
+        return settings.getString("username", "");
+    }
     public void readData() {
         reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.addValueEventListener(new ValueEventListener() {
+
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 String user_Name = getUsernameFromPrefs();
                 userList.clear(); // Clear the list before adding new data
@@ -161,16 +165,14 @@ public class DisplayUsers extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle onCancelled event
             }
-            private String getUsernameFromPrefs() {
-                SharedPreferences settings = getSharedPreferences("MyPrefsFile", 0);
-                return settings.getString("username", "");
-            }
+
         });
     }
 
     // Inside findNearbyUsers method
     private void findNearbyUsers() {
         boolean foundNearbyUser = false;
+        String currentUserName = getUsernameFromPrefs().toLowerCase();
 
         for (User user : userList) {
             float[] distance = new float[1];
@@ -183,8 +185,8 @@ public class DisplayUsers extends AppCompatActivity {
             double distanceInKm = distance[0] / 10000000;
             Toast.makeText(DisplayUsers.this, "Distance: " + distanceInKm, Toast.LENGTH_SHORT).show();
 
-            if (distanceInKm <= 3.0) {
-                // User is within the specified distance
+            if (distanceInKm <= 3.0 && !user.getUserName().equalsIgnoreCase(currentUserName)) {
+                // User is within the specified distance and not the current user
                 // Show a toast for the nearby user
                 String toastMessage = "Nearby User: " + user.getUserName() + ", Mobile Number: " + user.getMobileNumber();
                 mobile_Number = user.getMobileNumber();
@@ -200,6 +202,7 @@ public class DisplayUsers extends AppCompatActivity {
             Toast.makeText(this, "No nearby users found", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     // Convert dp to pixels
     private int dpToPx(int dp) {

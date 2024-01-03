@@ -81,6 +81,7 @@ public class GetLocation extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    // Inside getLastLocation method
     private void getLastLocation() {
         if (!isPermissionGranted) {
             checkPermission();

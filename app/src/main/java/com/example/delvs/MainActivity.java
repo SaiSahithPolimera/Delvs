@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         Button btngenOTP = findViewById(R.id.btngenerateOTP);
         Button btnverify = findViewById(R.id.btnverifyOTP);
         Button btnResend = findViewById(R.id.btnResendOTP);
-        Button goAnyWay = findViewById(R.id.GoAnyWay);
+//        Button goAnyWay = findViewById(R.id.GoAnyWay);
 
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
@@ -67,18 +67,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        goAnyWay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Moved to the next activity!", Toast.LENGTH_SHORT).show();
-                String number = phone.getText().toString();
-                saveMobileNumberToPrefs(number);
-                // Remove the following line since you've already sent the verification code
-                // sendVerificationCode(number);
-                startActivity(new Intent(MainActivity.this, HomeActivity.class));
-                finish();
-            }
-        });
+//        goAnyWay.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this, "Moved to the next activity!", Toast.LENGTH_SHORT).show();
+//                String number = phone.getText().toString();
+//                saveMobileNumberToPrefs(number);
+//                // Remove the following line since you've already sent the verification code
+//                // sendVerificationCode(number);
+//                startActivity(new Intent(MainActivity.this, HomeActivity.class));
+//                finish();
+//            }
+//        });
 
         btnverify.setOnClickListener(new View.OnClickListener() {
             @Override

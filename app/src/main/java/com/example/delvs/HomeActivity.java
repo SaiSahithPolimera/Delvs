@@ -32,7 +32,26 @@ public class HomeActivity extends AppCompatActivity {
         binding.registerBtn.setOnClickListener(view -> {
             registerUser();
         });
-    } // <-- Added missing closing brace for onCreate method
+
+        // Check if the user is already registered
+        if (isUserRegistered()) {
+            // If registered, open the GetLocation activity
+            startActivity(new Intent(HomeActivity.this, GetLocation.class));
+            finish(); // Finish the current activity to prevent going back to it
+        }
+    }
+
+    private boolean isUserRegistered() {
+        // Check if the username is already stored in preferences
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        return settings.contains(USERNAME_KEY);
+    }
+
+    private void redirectToGetLocation() {
+        startActivity(new Intent(HomeActivity.this, GetLocation.class));
+        finish(); // Finish the current activity to prevent going back to it
+    }
+
 
     public void registerUser() {
         String firstName = binding.firstName.getEditText().getText().toString();
@@ -56,7 +75,9 @@ public class HomeActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Toast.makeText(HomeActivity.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
                     saveUsernameToPrefs(userName);
-                    startActivity(new Intent(HomeActivity.this, LocationAccess.class));
+
+                    // Redirect to GetLocation activity
+                    redirectToGetLocation();
                 } else {
                     Toast.makeText(HomeActivity.this, "Registration failed. Try again!", Toast.LENGTH_SHORT).show();
                 }
