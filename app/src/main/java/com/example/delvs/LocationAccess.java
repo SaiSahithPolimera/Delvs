@@ -22,6 +22,5 @@ public class LocationAccess extends AppCompatActivity {
                     }
                 }
         );
-
     }
 }

@@ -1,6 +1,8 @@
 package com.example.delvs;
 
 public class Users {
+    Users(){
+    }
 
     public String firstName, lastName, age, userName, mobileNumber;
     public double latitude, longitude;
@@ -14,6 +16,13 @@ public class Users {
         this.mobileNumber = mobileNumber;
     }
 
+   public Users(String userName, String firstName,double latitude, double longitude, String mobileNumber) {
+        this.userName = userName;
+        this.firstName = firstName;
+        this.mobileNumber = mobileNumber;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
     // Constructor for location details
     public Users(double latitude, double longitude) {
         this.latitude = latitude;

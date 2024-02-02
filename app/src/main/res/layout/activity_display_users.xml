@@ -1,83 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:orientation="vertical"
-    android:padding="16dp">
+    tools:context=".DisplayUsers">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/backButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="14dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/back"
-            android:src="@drawable/arrow_back_icon" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#FFFFFF"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/back"
+                android:src="@drawable/arrow_back_icon" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"
-        android:contentDescription="@string/app_name">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:id="@+id/UserInfoBlock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <!-- Add your scrollable content here -->
+            android:layout_margin="16dp"
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:padding="16dp">
 
                 <ImageView
                     android:id="@+id/imageProfile"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginTop="4dp"
                     android:contentDescription="ProfileImage"
                     android:src="@drawable/searchaccounticon" />
 
                 <TextView
-                    android:id="@+id/MobileNumber"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
+                    android:id="@+id/userName"
+                    android:layout_width="24dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:background="#F4F4F4"
+                    android:layout_weight="1"
                     android:fontFamily="@font/poppins_medium"
-                    android:gravity="left|center_vertical"
                     android:text="Profile"
-                    android:textColor="#546E7A"
-                    tools:ignore="RtlHardcoded" />
+                    android:textColor="#151A1D" />
 
                 <ImageButton
                     android:id="@+id/phoneButton"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
                     android:backgroundTint="@color/black"
                     android:contentDescription="phoneCallButton"
                     app:srcCompat="@android:drawable/stat_sys_phone_call" />
 
             </LinearLayout>
 
-        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

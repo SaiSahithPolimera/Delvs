@@ -13,8 +13,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
         android:allowBackup="true"
@@ -35,7 +35,7 @@
             android:label="@string/title_activity_show_users"
             android:resizeableActivity="true"
             android:theme="@style/Theme.Delvs"
-            tools:targetApi="24" />
+             />
         <activity
             android:name=".GetLocation"
             android:exported="true"

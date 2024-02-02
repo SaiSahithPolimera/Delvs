@@ -33,10 +33,10 @@ public class HomeActivity extends AppCompatActivity {
             registerUser();
         });
 
-        // Check if the user is already registered
+//         Check if the user is already registered
         if (isUserRegistered()) {
             // If registered, open the GetLocation activity
-            startActivity(new Intent(HomeActivity.this, GetLocation.class));
+            startActivity(new Intent(HomeActivity.this, LocationAccess.class));
             finish(); // Finish the current activity to prevent going back to it
         }
     }
@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void redirectToGetLocation() {
-        startActivity(new Intent(HomeActivity.this, GetLocation.class));
+        startActivity(new Intent(HomeActivity.this, LocationAccess.class));
         finish(); // Finish the current activity to prevent going back to it
     }
 
@@ -61,7 +61,6 @@ public class HomeActivity extends AppCompatActivity {
 
         if (!firstName.isEmpty() && !lastName.isEmpty() && !age.isEmpty() && !userName.isEmpty()) {
             String mobileNumber = getMobileNumberFromPrefs();
-            Toast.makeText(HomeActivity.this, "MobileNumber: " + mobileNumber, Toast.LENGTH_SHORT).show();
             Users users = new Users(firstName, lastName, age, userName, mobileNumber);
             db = FirebaseDatabase.getInstance();
             reference = db.getReference("Users");

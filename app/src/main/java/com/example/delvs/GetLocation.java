@@ -28,7 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class GetLocation extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
-    private Location currentLocation;
     private boolean isPermissionGranted;
     private FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -92,9 +91,6 @@ public class GetLocation extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                    currentLocation = location;
-                    Toast.makeText(GetLocation.this, "Your location Latitude: " + location.getLatitude() +
-                            "\nYour location Longitude: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
                     updateLocationInDatabase(location.getLatitude(), location.getLongitude());
                 } else {
                     Toast.makeText(GetLocation.this, "Could not find location", Toast.LENGTH_SHORT).show();

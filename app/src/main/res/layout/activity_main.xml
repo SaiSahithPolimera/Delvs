@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-
+            android:padding="10dp"
             android:fontFamily="@font/poppins_medium"
             android:inputType="phone" />
 
@@ -76,7 +76,7 @@
 
     <Button
         android:id="@+id/btnResendOTP"
-        android:layout_width="200dp"
+        android:layout_width=" 200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_margin="5dp"

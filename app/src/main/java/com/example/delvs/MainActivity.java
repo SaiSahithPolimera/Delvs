@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String MOBILE_NUMBER_KEY = "mobileNumber";
 
     private FirebaseAuth mAuth;
+
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
     private ProgressDialog progressDialog;
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         Button btngenOTP = findViewById(R.id.btngenerateOTP);
         Button btnverify = findViewById(R.id.btnverifyOTP);
         Button btnResend = findViewById(R.id.btnResendOTP);
-//        Button goAnyWay = findViewById(R.id.GoAnyWay);
 
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
@@ -62,23 +62,11 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     String number = phone.getText().toString();
                     saveMobileNumberToPrefs(number);
-                    sendVerificationCode(number);
+                    sendVerificationCode(number); // This line triggers OTP verification
                 }
             }
         });
 
-//        goAnyWay.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(MainActivity.this, "Moved to the next activity!", Toast.LENGTH_SHORT).show();
-//                String number = phone.getText().toString();
-//                saveMobileNumberToPrefs(number);
-//                // Remove the following line since you've already sent the verification code
-//                // sendVerificationCode(number);
-//                startActivity(new Intent(MainActivity.this, HomeActivity.class));
-//                finish();
-//            }
-//        });
 
         btnverify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,12 +106,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Verification Failed", Toast.LENGTH_SHORT).show();
             }
 
-            @Override
-            public void onCodeSent(@NonNull String s,
-                                   @NonNull PhoneAuthProvider.ForceResendingToken token) {
-                super.onCodeSent(s, token);
-                verificationID = s;
-            }
+                @Override
+    public void onCodeSent(@NonNull String s,
+                           @NonNull PhoneAuthProvider.ForceResendingToken token) {
+        super.onCodeSent(s, token);
+        verificationID = s;
+        progressDialog.dismiss(); // Dismiss the ProgressDialog here
+    }
         };
     }
 

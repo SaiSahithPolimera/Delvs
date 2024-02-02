@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "216691480977",
+    "firebase_url": "https://delvsusers-default-rtdb.firebaseio.com",
+    "project_id": "delvsusers",
+    "storage_bucket": "delvsusers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216691480977:android:5318d785162acef2882230",
+        "android_client_info": {
+          "package_name": "com.example.ThreadsTogether"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgR09eRWBlqPiU1vOzNJVH2h7COtOD8Nc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216691480977:android:4f4be6245c379df5882230",
+        "android_client_info": {
+          "package_name": "com.example.ThreadsTogether"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgR09eRWBlqPiU1vOzNJVH2h7COtOD8Nc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
